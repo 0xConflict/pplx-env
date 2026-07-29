@@ -1,7 +1,7 @@
 [project]
-name = "pplx-env"
-version = "0.1.0"
-description = "Python wrapper for Perplexity Computer's connector API"
+name = "computer-skills"
+version = "0.2.0"
+description = "Pre-built skills for Perplexity Computer"
 requires-python = ">=3.10"
 license = "MIT"
 

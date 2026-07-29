@@ -1,15 +1,12 @@
-"""Perplexity Computer connector client."""
+"""Connector skill — interact with Perplexity Computer's connected services."""
 
 import json
 import os
 import urllib.request
 
 
-class ComputerClient:
-    """Client for Perplexity Computer's connector API.
-
-    Reads credentials from the config written by scripts/setup.sh.
-    """
+class ConnectorClient:
+    """Wraps Perplexity Computer's connector API."""
 
     def __init__(self, config_path=None):
         if config_path is None:
@@ -20,11 +17,11 @@ class ComputerClient:
         self._key = self._config["key"]
         self._agent_id = self._config.get("agent_id", "")
 
-    def _request(self, method: str, path: str, body: dict = None) -> dict:
+    def _request(self, method, path, body=None):
         url = f"{self._endpoint}{path}"
         headers = {
             "x-api-key": self._key,
-            "x-app-apiclient": "pplx-env",
+            "x-app-apiclient": "computer-skills",
             "x-agent-id": self._agent_id,
             "Content-Type": "application/json",
         }
@@ -33,17 +30,17 @@ class ComputerClient:
         with urllib.request.urlopen(req, timeout=30) as resp:
             return json.loads(resp.read())
 
-    def connectors(self) -> list[dict]:
-        """List all connected services."""
+    def list(self):
         result = self._request("GET", "/rest/connector-service/connectors")
         return result.get("connectors", [])
 
-    def describe(self, source_id: str) -> dict:
-        """Get tool schema for a connector."""
-        path = f"/rest/connector-service/connectors/{source_id}/describe"
-        return self._request("POST", path)
+    def describe(self, source_id):
+        return self._request("POST", f"/rest/connector-service/connectors/{source_id}/describe")
 
-    def tool(self, source_id: str, tool_name: str, **parameters) -> dict:
-        """Execute a connector tool."""
+    def tool(self, source_id, tool_name, **parameters):
         path = f"/rest/connector-service/connectors/{source_id}/tools/{tool_name}/execute"
         return self._request("POST", path, {"parameters": parameters})
+
+
+def client(config_path=None):
+    return ConnectorClient(config_path)
