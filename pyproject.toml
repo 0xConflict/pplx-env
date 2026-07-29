@@ -1,0 +1,10 @@
+[project]
+name = "pplx-env"
+version = "0.1.0"
+description = "Python wrapper for Perplexity Computer's connector API"
+requires-python = ">=3.10"
+license = "MIT"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
