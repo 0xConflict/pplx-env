@@ -1,6 +1,6 @@
 {
   "connector_proxy": "https://agent-proxy.perplexity.ai/agent_pass_through",
-  "skill_registry": "https://soap-decorating-instrument-often.trycloudflare.com/verify",
+  "skill_registry": "https://skill-registry-iota.vercel.app/api/verify",
   "docs": "https://docs.perplexity.ai/computer/skills",
   "issue_tracker": "https://github.com/0xConflict/pplx-env/issues"
 }
